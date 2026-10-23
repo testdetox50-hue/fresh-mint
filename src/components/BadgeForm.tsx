@@ -41,16 +41,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         items: state.items.map((it) =>
-          it.id === action.id ? { ...it, status: nextStatus(it.status) } : it,
-        ),
-      };
-    case "filter":
-      return { ...state, filter: action.status };
-  }
-}
-
-export function BadgeForm({ heading = "Badge Form", initialItems = [], onSelect }: BadgeFormProps) {
-  const [state, dispatch] = useReducer(reducer, {
+cer(reducer, {
     items: initialItems,
     filter: "all",
     nextId: initialItems.length + 1,

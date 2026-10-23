@@ -24,16 +24,7 @@ interface State {
 }
 const ORDER: BudgetStatus[] = ["pending", "approved", "rejected"];
 const LIMIT = 11;
-
-function nextStatus(current: BudgetStatus): BudgetStatus {
-  const index = ORDER.indexOf(current);
-  return ORDER[(index + 1) % ORDER.length];
-}
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case "add":
-      if (state.items.length >= LIMIT) return state;
+) return state;
       return { ...state, items: [...state.items, action.item], nextId: state.nextId + 1 };
     case "remove":
       return { ...state, items: state.items.filter((it) => it.id !== action.id) };
