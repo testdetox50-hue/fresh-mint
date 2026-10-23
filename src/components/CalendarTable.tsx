@@ -46,7 +46,15 @@ function reducer(state: State, action: Action): State {
       };
     case "filter":
       return { ...state, filter: action.status };
+  }
+}
 
+export function CalendarTable({ heading = "Calendar Table", initialItems = [], onSelect }: CalendarTableProps) {
+  const [state, dispatch] = useReducer(reducer, {
+    items: initialItems,
+    filter: "all",
+    nextId: initialItems.length + 1,
+  });
 
   const visible = useMemo(
     () => state.items.filter((it) => state.filter === "all" || it.status === state.filter),
