@@ -71,7 +71,22 @@ export function BookingList({ heading = "Booking List", initialItems = [], onSel
     dispatch({ type: "add", item: { id, title: `Booking #${id}`, status: "pending", score: (id * 8) % 100 } });
   }, [state.nextId]);
 
- => onSelect?.(it)}>
+  return (
+    <section className="booking-list" aria-label={heading}>
+      <header>
+        <h2>{heading}</h2>
+        <p>
+          {bookingCount} shown, average score {averageScore.toFixed(1)}
+        </p>
+        <select value={state.filter} onChange={(e) => dispatch({ type: "filter", status: e.target.value as BookingStatus | "all" })}>
+          <option value="all">all</option>
+          {ORDER.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+        <button type="button" onClick={handleAdd} disabled={state.items.length >= LIMIT}>Add booking</button>
+      </header>
+      <ul>
+        {visible.map((it) => (
+          <li key={it.id} onClick={() => onSelect?.(it)}>
             <span>{it.title}</span> <em>{it.status}</em> <strong>{it.score}</strong>
             <button type="button" onClick={(e) => { e.stopPropagation(); dispatch({ type: "cycle", id: it.id }); }}>next</button>
             <button type="button" onClick={(e) => { e.stopPropagation(); dispatch({ type: "remove", id: it.id }); }}>remove</button>
